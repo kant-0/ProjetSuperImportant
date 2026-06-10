@@ -14,11 +14,11 @@ planet * newPlanet(Vec3 pos0, Vec3 speed0) {
     return planet;
 }
 
-void pushElement(planet **previousPlanet, Vec3 newPosition, Vec3 newSpeed) {
+void pushElement(planet **previousPlanet, Vec3* newPosition, Vec3* newSpeed) {
     Vec3 * pos1 = newPlanet->position;
     Vec3 * pos2 = newPosition;
     planet* newPlanet = malloc(sizeof(planet));
-    
+
     newPlanet->position = addVec3(
         (*previousPlanet)->position, 
         (*previousPlanet)->speed
@@ -34,5 +34,4 @@ void pushElement(planet **previousPlanet, Vec3 newPosition, Vec3 newSpeed) {
     newPlanet->time = (*previousPlanet)->time + 1;
     
     previousPlanet->next = newPlanet;
-    return
 }
