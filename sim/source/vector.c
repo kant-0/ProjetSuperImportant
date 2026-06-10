@@ -27,3 +27,10 @@ Vec3* scaleVec3(Vec3* vec, double scalar) {
 double normVec3(Vec3* vec) {
     return sqrt(SQ(vec->x) + SQ(vec->y) + SQ(vec->z));
 }
+
+Vec3* makeUnit(double x, double y, double z) {
+    Vec3* vec = newVec3(x, y, z);
+    Vec3* new_vec = scaleVec3(vec, 1/normVec3(vec));
+    free(vec);
+    return new_vec;
+}
