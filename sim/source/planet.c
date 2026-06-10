@@ -4,14 +4,14 @@
 #include "planet.h"
 #include "vector.h"
 
-planet * newSun() {
-    planet* sun = malloc(sizeof(planet));
-    sun->position = newVec3(0.0, 0.0, 0.0);
-    sun->speed = newVec3(0.0, 0.0, 0.0);
+planet * newPlanet(Vec3 pos0, Vec3 speed0) {
+    planet* planet = malloc(sizeof(planet));
+    sun->position = pos0;
+    sun->speed = speed0;
     sun->time = 0;
     
     sun->next = NULL;
-    return 
+    return planet;
 }
 
 void pushElement(planet **previousPlanet, Vec3 newPosition, Vec3 newSpeed) {
