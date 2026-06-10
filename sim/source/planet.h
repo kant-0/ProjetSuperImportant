@@ -1,5 +1,5 @@
-#ifndef ELEMENT_H
-#define ELEMENT_H
+#ifndef PLANET_H
+#define PLANET_H
 
 #include "vector.h"
 
