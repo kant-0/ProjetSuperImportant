@@ -10,7 +10,7 @@ typedef struct _planet {
     struct _planet *next;
 } planet;
 
-planet* newPlanet();
+planet * newPlanet(Vec3 pos0, Vec3 speed0);
 
 void pushElement(planet **my_element, Vec3 newPosition, Vec3 newSpeed);
 

@@ -6,6 +6,16 @@
 
 #define SQ(x) ((x)*(x))
 
+Vec3* origin() {
+    Vec3* vec = malloc(sizeof(Vec3));
+
+    vec->x = 0.0;
+    vec->y = 0.0;
+    vec->z = 0.0;
+
+    return vec;
+}
+
 Vec3* newVec3(double x, double y, double z) {
     Vec3* vec = malloc(sizeof(Vec3));
 
