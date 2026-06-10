@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "vector.h"
-#include "math.h"
+#include "physics.h"
 
 double acceleration(double radius) {
     double G = 6.6743e-11;
