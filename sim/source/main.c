@@ -5,6 +5,6 @@
 #include "physics.h"
 
 int main() {
-    planet * sun = newPlanet(Vec3 origin(), Vec3 origin());
+    planet * sun = newPlanet(origin(), origin());
     return 0;
 }
