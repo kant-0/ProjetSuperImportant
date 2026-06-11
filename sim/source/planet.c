@@ -4,7 +4,7 @@
 #include "planet.h"
 #include "vector.h"
 
-planet * newPlanet(Vec3 pos0, Vec3 speed0) {
+planet * newPlanet(Vec3* pos0, Vec3* speed0) {
     planet* planet = malloc(sizeof(planet));
     planet->position = pos0;
     planet->speed = speed0;
