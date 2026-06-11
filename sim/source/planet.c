@@ -32,6 +32,7 @@ void pushElement(planet **previousPlanet, Vec3* newPosition, Vec3* newSpeed) {
             acceleration(radius(origin(), pos2))
         )
     );
+    
     newPlanet->time = (*previousPlanet)->time + 1;
 
     newPlanet->name = (*previousPlanet)->name;
