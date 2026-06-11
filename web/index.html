@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulation système solaire</title>
     <link rel="stylesheet" href="style.css">
+    <script src="p5/p5.min.js"></script>
 </head>
     <body>
         <div id="file-selection">
             <h1>Projet Kepler</h1>
-            <input type="file" onchange="start(this)">
+            <input type="file" onchange="readFile(this)">
         </div>
-        <div id="sim-container" hidden>
-            <img id="sky" src="images/sky.jpg" alt="sky">
-            <img id="sun" src="images/sun.png" alt="sun">
-        </div>
-        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="script.js"></script>       
     </body>
 </html>
