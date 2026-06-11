@@ -4,6 +4,7 @@
 #include "vector.h"
 
 typedef struct _planet {
+    char * name;
     Vec3 position;
     Vec3 speed;
     int time;
