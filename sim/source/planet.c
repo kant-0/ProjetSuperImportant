@@ -3,6 +3,7 @@
 
 #include "planet.h"
 #include "vector.h"
+#include "physics.h"
 
 planet * newPlanet(Vec3* pos0, Vec3* speed0) {
     planet* planet = malloc(sizeof(planet));
@@ -15,7 +16,7 @@ planet * newPlanet(Vec3* pos0, Vec3* speed0) {
 }
 
 void pushElement(planet **previousPlanet, Vec3* newPosition, Vec3* newSpeed) {
-    Vec3 * pos1 = newPlanet->position;
+    Vec3 * pos1 = (*previousPlanet)->position;
     Vec3 * pos2 = newPosition;
     
     planet* newPlanet = malloc(sizeof(planet));
@@ -27,9 +28,9 @@ void pushElement(planet **previousPlanet, Vec3* newPosition, Vec3* newSpeed) {
 
     newPlanet->speed = addVec3(
         (*previousPlanet)->speed,
-        scaleVec(
+        scaleVec3(
             normalize(pos2),
-            acceleration(radius(origin(), pos2))
+            acceleration(normVec3(radius(origin(), pos2)))
         )
     );
     
@@ -37,5 +38,5 @@ void pushElement(planet **previousPlanet, Vec3* newPosition, Vec3* newSpeed) {
 
     newPlanet->name = (*previousPlanet)->name;
     
-    previousPlanet->next = newPlanet;
+    (*previousPlanet)->next = newPlanet;
 }
