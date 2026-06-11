@@ -1,6 +1,11 @@
-
 :root {
     overflow: hidden;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #sim-container {
@@ -16,7 +21,5 @@
     opacity: .5;
     width: 100%;
     height: 100%;
-}
-#sun {
-
+    background-repeat: repeat;
 }
