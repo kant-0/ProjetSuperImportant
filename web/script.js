@@ -1,20 +1,20 @@
-function start(elm) {
-    new Response(elm.files[0]).json().then(json => {
-        console.log(json)
-        document.getElementById("sim-container").toggleAttribute("hidden") // code de con
-    }, err => {
-        // not json
-    })
-}
-
 let echelle = 1000000000;
 let reader = new FileReader();
 let file;
 let dataJSON;
 let method;
 let bg;
-let img;
-let img_sun;
+let earth; 
+let jupiter;
+let mars;
+let mercury;
+let moon;
+let neptune;
+let pluto;
+let saturn;
+let sun;
+let uranus;
+let venus;
 let oY = 400/2;
 let oX = 720/2;
 
@@ -27,16 +27,50 @@ function readFile(input) {
 
     reader.onload = function() {
         dataJSON = JSON.parse(reader.result);
-        method = Object.keys(dataJSON)[0];
-        
-        console.log(dataJSON[method]);
+        dataJSON = dataJSON[calculMethod];
+
         for(let i=0;i<3750;i++){
             point(oX + dataJSON[method][i][0][0]/echelle, oY + dataJSON[method][i][0][1]/echelle);
             i++;
         }
         imageMode(CENTER);
-        image(img, oX + dataJSON[method][0][0][0]/echelle, oY + dataJSON[method][0][0][1]/echelle, 20, 20);
-    
+        image(sun, oX, oY, 80, 80)
+        image(mercury, 
+            oX + dataJSON["mercury"][a][0][0]/echelle, 
+            oY + dataJSON["mercury"][a][0][1]/echelle, 
+            20, 20);
+        image(venus, 
+            oX + dataJSON["venus"][a][0][0]/echelle, 
+            oY + dataJSON["venus"][a][0][1]/echelle, 
+            20, 20);
+        image(earth, 
+            oX + dataJSON["earth"][a][0][0]/echelle, 
+            oY + dataJSON["earth"][a][0][1]/echelle, 
+            20, 20);
+        image(mars, 
+            oX + dataJSON["mars"][a][0][0]/echelle, 
+            oY + dataJSON["mars"][a][0][1]/echelle, 
+            20, 20);
+        image(jupiter, 
+            oX + dataJSON["jupiter"][a][0][0]/echelle, 
+            oY + dataJSON["jupiter"][a][0][1]/echelle, 
+            20, 20);
+        image(saturn, 
+            oX + dataJSON["saturn"][a][0][0]/echelle, 
+            oY + dataJSON["saturn"][a][0][1]/echelle, 
+            20, 20);
+        image(uranus, 
+            oX + dataJSON["uranus"][a][0][0]/echelle, 
+            oY + dataJSON["uranus"][a][0][1]/echelle, 
+            20, 20);
+        image(neptune, 
+            oX + dataJSON["neptune"][a][0][0]/echelle, 
+            oY + dataJSON["neptune"][a][0][1]/echelle, 
+            20, 20);
+        image(pluto, 
+            oX + dataJSON["pluto"][a][0][0]/echelle, 
+            oY + dataJSON["pluto"][a][0][1]/echelle, 
+            20, 20);
     };
 
     reader.onerror = function() {
@@ -56,6 +90,8 @@ function preload() {
     sun = loadImage('images/sun.png');
     uranus = loadImage('images/uranus.png');
     venus = loadImage('images/venus.png');
+
+    bg = loadImage('images/sky.png');
 
     button = createButton("reset");
     button.mousePressed(reset);
@@ -79,10 +115,9 @@ function mouseReleased() {
 
 function setup() {
     createCanvas(720, 400).addClass("monitor");
-    bg = loadImage('images/sky.png');
 
     imageMode(CENTER);
-    image(img_sun, oX, oY, 80, 80);
+    image(sun, oX, oY, 80, 80);
 
     noLoop()  
     a = 0;
@@ -92,10 +127,42 @@ function draw() {
     //background(bg);
     image(bg, width/2, height/2, width, height);
 
-    image(img_sun, oX, oY, 80, 80)
-    image(img, 
-        oX + dataJSON[method][a][0][0]/echelle, 
-        oY + dataJSON[method][a][0][1]/echelle, 
+    image(sun, oX, oY, 80, 80)
+    image(mercury, 
+        oX + dataJSON["mercury"][a][0][0]/echelle, 
+        oY + dataJSON["mercury"][a][0][1]/echelle, 
+        20, 20);
+    image(venus, 
+        oX + dataJSON["venus"][a][0][0]/echelle, 
+        oY + dataJSON["venus"][a][0][1]/echelle, 
+        20, 20);
+    image(earth, 
+        oX + dataJSON["earth"][a][0][0]/echelle, 
+        oY + dataJSON["earth"][a][0][1]/echelle, 
+        20, 20);
+    image(mars, 
+        oX + dataJSON["mars"][a][0][0]/echelle, 
+        oY + dataJSON["mars"][a][0][1]/echelle, 
+        20, 20);
+    image(jupiter, 
+        oX + dataJSON["jupiter"][a][0][0]/echelle, 
+        oY + dataJSON["jupiter"][a][0][1]/echelle, 
+        20, 20);
+    image(saturn, 
+        oX + dataJSON["saturn"][a][0][0]/echelle, 
+        oY + dataJSON["saturn"][a][0][1]/echelle, 
+        20, 20);
+    image(uranus, 
+        oX + dataJSON["uranus"][a][0][0]/echelle, 
+        oY + dataJSON["uranus"][a][0][1]/echelle, 
+        20, 20);
+    image(neptune, 
+        oX + dataJSON["neptune"][a][0][0]/echelle, 
+        oY + dataJSON["neptune"][a][0][1]/echelle, 
+        20, 20);
+    image(pluto, 
+        oX + dataJSON["pluto"][a][0][0]/echelle, 
+        oY + dataJSON["pluto"][a][0][1]/echelle, 
         20, 20);
     
     if (a < 36501)
@@ -103,4 +170,3 @@ function draw() {
     else 
         {a = 0;}
 }
-

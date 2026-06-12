@@ -15,7 +15,7 @@ planet * newPlanet(Vec3* pos0, Vec3* speed0) {
     return planet;
 }
 
-void pushElement(planet **previousPlanet, Vec3* newPosition, Vec3* newSpeed) {
+void pushElement(planet **previousPlanet) {
     Vec3 * pos1 = (*previousPlanet)->position;
     Vec3 * pos2 = newPosition;
     
