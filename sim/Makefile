@@ -1,6 +1,6 @@
 
 
 all:
-	gcc -lm source/*.c -o out
+	gcc source/*.c -lm -o out
 clean:
 	rm out

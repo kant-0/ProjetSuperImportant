@@ -3,16 +3,16 @@
 
 #include "vector.h"
 
-typedef struct _planet {
+typedef struct planet_ {
     char * name;
     Vec3* position;
     Vec3* speed;
     int time;
-    struct _planet *next;
-} planet;
+    struct planet_* next;
+} Planet;
 
-planet * newPlanet(Vec3* pos0, Vec3* speed0);
+Planet * newPlanet(Vec3* pos0, Vec3* speed0);
 
-void pushElement(planet **my_element, Vec3* newPosition, Vec3* newSpeed);
+void pushElement(Planet **my_element, Vec3* newPosition, Vec3* newSpeed);
 
 #endif

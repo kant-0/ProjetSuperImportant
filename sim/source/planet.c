@@ -5,8 +5,8 @@
 #include "vector.h"
 #include "physics.h"
 
-planet * newPlanet(Vec3* pos0, Vec3* speed0) {
-    planet* planet = malloc(sizeof(planet));
+Planet * newPlanet(Vec3* pos0, Vec3* speed0) {
+    Planet* planet = malloc(sizeof(planet));
     planet->position = pos0;
     planet->speed = speed0;
     planet->time = 0;
@@ -15,28 +15,16 @@ planet * newPlanet(Vec3* pos0, Vec3* speed0) {
     return planet;
 }
 
-void pushElement(planet **previousPlanet) {
-    Vec3 * pos1 = (*previousPlanet)->position;
-    Vec3 * pos2 = newPosition;
+void pushNextPlanetIteration(Planet* p) {
+    while (p->next) p = p->next; // go to end of linked list
     
-    planet* newPlanet = malloc(sizeof(planet));
+    Vec3* prevAccel = getAccelerationVec3(p->position);
+    Vec3* newSpeed = getNextSpeedVec3(p->speed, prevAccel);
 
-    newPlanet->position = addVec3(
-        (*previousPlanet)->position, 
-        (*previousPlanet)->speed
-    );
-
-    newPlanet->speed = addVec3(
-        (*previousPlanet)->speed,
-        scaleVec3(
-            normalize(pos2),
-            acceleration(normVec3(radius(origin(), pos2)))
-        )
-    );
+    free(prevAccel);
     
-    newPlanet->time = (*previousPlanet)->time + 1;
-
-    newPlanet->name = (*previousPlanet)->name;
+    Vec3* newPosition = getNextPosVec3(p->position, p->speed);
     
-    (*previousPlanet)->next = newPlanet;
+    p->next = newPlanet(newPosition, newSpeed);
+    p->next->time = p->time + 1;
 }
