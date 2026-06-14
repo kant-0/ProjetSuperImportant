@@ -3,7 +3,7 @@
 
 #include "planet.h"
 #include "vector.h"
-#include "physics.h"
+#include "formula.h"
 
 Planet * newPlanet(Vec3* pos0, Vec3* speed0) {
     Planet* planet = malloc(sizeof(planet));

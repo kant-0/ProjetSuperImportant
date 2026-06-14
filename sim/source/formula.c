@@ -2,29 +2,109 @@
 #include <stdlib.h>
 
 #include "vector.h"
-#include "physics.h"
+#include "formula.h"
 
-#define CB(x) ((x)*(x)*(x))
+#define CUBED(x) ((x)*(x)*(x))
 
-Vec3 * acceleration(Vec3 * pos) {
+double acceleration(double radius) {
     double G = 6.6743e-11;
     double m_Sun = 1.989e30;
-    a_norm = -(G*m_Sun)/CB(normVec3(pos));
-
-    return scaleVec3(pos, a_norm);
+    return -(G*m_Sun)/(radius*radius);
 }
 
-Vec3 * eulerMethod(Vec3 * F, Vec3 * f, double deltaT) {
-    return addVec3(
-        F, 
-        scaleVec3(f, deltaT)
-    );  // Fn+1 = Fn + fn x /\t
+Vec3* radius(Vec3* pos1, Vec3* pos2) {
+    Vec3 * r = malloc(sizeof(Vec3));
+    r = addVec3(pos2, scaleVec3(pos1, -1.0)); // B - A
+    return r;
 }
 
-Vec3 * rungeKutta(planet * trajectory, double deltaT) {
-    Vec3 * k1r = scaleVec3(trajectory->speed, deltaT);
-    Vec3 * k1v = scaleVec3(acceleration(trajectory->position), deltaT);
+Vec3* getAccelerationVec3(Vec3* pos) {
+    const double G = 6.6743e-11;
+    const double m_S = 1.989e30;
+    const double dist = normVec3(pos);
+    const double accel_value = -(G*m_S)/(CUBED(dist));
+    Vec3* accel = scaleVec3(pos, accel_value);
 
-    Vec3 * k2r = scaleVec3();
-    Vec3 * k2v = scaleVec3();
+    return accel;
+}
+
+Vec3* getNextSpeedVec3(Vec3* prevSpeed, Vec3* prevAccel) {
+    return addVec3(prevSpeed, prevAccel);
+}
+
+Vec3* getNextPosVec3(Vec3* prevPos, Vec3* prevSpeed) {
+    return addVec3(prevPos, prevSpeed);
+}
+
+Vec3 * eulerMethodSpeed(planet * trajectory, double deltaT) {
+    return addVec3( // vxt+1 = vxt + axt x Δt
+        trajectory->speed, 
+        scaleVec3(
+            getAccelerationVec3(trajectory->position), 
+            deltaT
+        )
+    ); 
+}
+
+Vec3 * eulerMethodPosition(planet * trajectory, double deltaT) {
+    return addVec3( // xt+1 = xt + vxt x Δt
+        trajectory->position, 
+        scaleVec3(
+            trajectory->speed, 
+            deltaT
+        )
+    ); 
+}
+
+Vec3 * eulerAsymetricSpeed(planet * trajectory, double deltaT) {
+    Vec3 * posTn1 = eulerMethodPosition(trajectory, deltaT);
+
+    return addVec3( // vxt+1 = vxt + axt+1 x Δt
+        trajectory->speed, 
+        scaleVec3(
+            getAccelerationVec3(posTn1), 
+            deltaT
+        )
+    ); 
+}
+
+Vec3 * eulerAsymetricPosition(planet * trajectory, double deltaT) {
+    return eulerMethodPosition(trajectory, deltaT);
+}
+
+Vec3 * rungeKuttaSpeed(planet * trajectory, double deltaT) {
+    Vec3 * k1r = scaleVec3(trajectory->speed, deltaT); // k1,r = Δt x vn
+
+    Vec3 * kmidr = addVec3(trajectory->position, scaleVec3(k1r, 2.0)); // vn + k1,v/2 
+
+    Vec3 * k2v = scaleVec3( // k2,v = Δt x a(kmidr)
+        getAccelerationVec3(kmidr),
+        deltaT
+    );
+
+    return addVec3(trajectory->speed, k2v);
+}
+
+Vec3 * rungeKuttaPosition(planet * trajectory, double deltaT) {
+    Vec3 * k1v = scaleVec3( // k1,v = Δt x an
+        getAccelerationVec3(trajectory->position),
+        deltaT
+    );
+
+    Vec3 * kmidv = addVec3(trajectory->speed, scaleVec3(k1v, 2.0)) // rn + k1,r/2
+
+    Vec3 * k2r = scaleVec3( // k2,r = Δt x kmidv
+        kmidv, 
+        deltaT
+    );
+
+    return addVec3(trajectory->position, k2r);
+}
+
+double potentialEnergy(planet * trajectory) {
+
+}
+
+double kineticEnergy(planet * trajectory, ) {
+    
 }

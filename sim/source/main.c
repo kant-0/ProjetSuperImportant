@@ -2,7 +2,7 @@
 
 #include "planet.h"
 #include "vector.h"
-#include "physics.h"
+#include "formula.h"
 
 int main() {
     Planet * mercure = newPlanet(
