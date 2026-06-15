@@ -7,9 +7,9 @@
 #include "vector.h"
 #include "planet.h"
 
-char* euler = "method-euler";
-char* rk = "method-runge-kutta";
-char* asym_euler = "method-asymetric-euler";
+char* euler = "method_euler";
+char* rk = "method_runge_kutta";
+char* asym_euler = "method_asymetric_euler";
 
 void write_json(FILE* out, Planet * trajectory) {
     if (!out) {

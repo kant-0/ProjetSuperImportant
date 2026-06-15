@@ -39,7 +39,7 @@ int main() {
                 speed0[i],
                 planets[i]
             );
-            for (int k = 0; k < N_ITERATIONS; k++) pushNextPlanetIteration(p, j+1);
+            for (int k = 0; k < N_ITERATIONS-1; k++) pushNextPlanetIteration(p, j+1);
             appendPlanetToJson(&json, j+1, p);
         }
     }
