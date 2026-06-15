@@ -8,7 +8,7 @@ typedef struct planet_ {
     Vec3* position;
     Vec3* speed;
     int time;
-    double mass
+    double mass;
     struct planet_* next;
 } Planet;
 

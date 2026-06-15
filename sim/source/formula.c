@@ -97,7 +97,7 @@ double potentialEnergy(System * system, double solarMass) {
     const double G = 6.6743e-11;
     double sum = 0;
     while (system) {
-        sum += (G*(*system->planet)->mass*solarMass)/(*system->planet)->position;
+        sum += (G*(system->planet)->mass*solarMass)/normVec3((system->planet)->position);
         system = system->next;
     }
     return -sum/2;
@@ -106,7 +106,7 @@ double potentialEnergy(System * system, double solarMass) {
 double kineticEnergy(System * system) {
     double sum = 0;
     while (system) {
-        sum += (*system->planet)->mass + SQ(normVec3((*system->planet)->speed));
+        sum += (system->planet)->mass + SQ(normVec3((system->planet)->speed));
         system = system->next;
     }
     return sum/2;

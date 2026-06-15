@@ -22,8 +22,8 @@ Vec3 * rungeKuttaSpeed(Planet * trajectory, double deltaT);
 
 Vec3 * rungeKuttaPosition(Planet * trajectory, double deltaT);
 
-double potentialEnergy(Planet * trajectory);
+double potentialEnergy(System * system, double solarMass);
 
-double kineticEnergy(Planet * trajectory);
+double kineticEnergy(System * system);
 
 #endif
