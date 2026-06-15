@@ -10,15 +10,15 @@ let oX = 720/2;
 
 const planets = {
     sun:     { img: null, size: 80 },
-    mercury: { img: null, size: 20 },
+    mercury: { img: null, size: 10 },
     venus:   { img: null, size: 20 },
-    earth:   { img: null, size: 20 },
+    earth:   { img: null, size: 25 },
     mars:    { img: null, size: 20 },
-    jupiter: { img: null, size: 20 },
-    saturn:  { img: null, size: 20 },
-    uranus:  { img: null, size: 20 },
-    neptune: { img: null, size: 20 },
-    pluto:   { img: null, size: 20 }
+    jupiter: { img: null, size: 30 },
+    saturn:  { img: null, size: 30 },
+    uranus:  { img: null, size: 25 },
+    neptune: { img: null, size: 25 },
+    pluto:   { img: null, size: 15 }
 };
 
 function readFile(input) {
@@ -94,6 +94,21 @@ function drawPlanet3D(name) {
     texture(planet.img);
     sphere(planet.size);
     pop();
+}
+
+function drawPlanet2D(name) {
+    imageMode(CENTER);
+    const planet = planets[name];
+    const pos = dataJSON[name][a][0];
+
+    image(
+        planet.img,
+        oX + pos[0] / ECHELLE,
+        oY + pos[1] / ECHELLE,
+        0,
+        planet.size,
+        planet.size
+    );
 }
 
 function draw() {
