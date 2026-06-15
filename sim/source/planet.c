@@ -1,12 +1,12 @@
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "planet.h"
 #include "vector.h"
 #include "formula.h"
 
-Planet * newPlanet(Vec3* pos0, Vec3* speed0) {
-    Planet* planet = malloc(sizeof(planet));
+Planet * newPlanet(Vec3* pos0, Vec3* speed0, char* name) {
+    Planet* planet = malloc(sizeof(Planet));
+    planet->name = name;
     planet->position = pos0;
     planet->speed = speed0;
     planet->time = 0;
@@ -25,6 +25,6 @@ void pushNextPlanetIteration(Planet* p) {
     
     Vec3* newPosition = getNextPosVec3(p->position, p->speed);
     
-    p->next = newPlanet(newPosition, newSpeed);
+    p->next = newPlanet(newPosition, newSpeed, p->name);
     p->next->time = p->time + 1;
 }
