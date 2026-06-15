@@ -9,7 +9,7 @@
 int main() {
     JsonSet* json = NULL;
 
-    char* planets[] = {"mercure", "venus", "terre", "mars", "jupiter", "saturne", "uranus", "neptune", "pluton"};
+    char* planets[] = {"mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto"};
     Vec3* pos0[] = {
         newVec3(46001200.0e3, 0.0, 0.0),
         newVec3(107476000.0e3, 0.0, 0.0),
