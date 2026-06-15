@@ -4,6 +4,7 @@
 #include "formula.h"
 
 #define CUBED(x) ((x)*(x)*(x))
+#define SQ(x) ((x)*(x))
 
 double acceleration(double radius) {
     double G = 6.6743e-11;
@@ -92,12 +93,21 @@ Vec3 * rungeKuttaPosition(Planet * trajectory, double deltaT) {
     return addVec3(trajectory->position, k2r);
 }
 
-double potentialEnergy(Planet * trajectory) {
-
-    return 0;
+double potentialEnergy(System * system, double solarMass) {
+    const double G = 6.6743e-11;
+    double sum = 0;
+    while (system) {
+        sum += (G*(*system->planet)->mass*solarMass)/(*system->planet)->position;
+        system = system->next;
+    }
+    return -sum/2;
 }
 
-double kineticEnergy(Planet * trajectory) {
-
-    return 0;
+double kineticEnergy(System * system) {
+    double sum = 0;
+    while (system) {
+        sum += (*system->planet)->mass + SQ(normVec3((*system->planet)->speed));
+        system = system->next;
+    }
+    return sum/2;
 }

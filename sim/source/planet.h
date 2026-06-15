@@ -8,8 +8,14 @@ typedef struct planet_ {
     Vec3* position;
     Vec3* speed;
     int time;
+    double mass
     struct planet_* next;
 } Planet;
+
+typedef struct system_ {
+    struct planet_ * planet;
+    struct system_ * next;
+} System;
 
 Planet * newPlanet(Vec3* pos0, Vec3* speed0, char* name);
 void pushElement(Planet **my_element, Vec3* newPosition, Vec3* newSpeed);
