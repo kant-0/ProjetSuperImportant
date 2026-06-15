@@ -71,12 +71,16 @@ function setup() {
 function drawPlanet3D(name) {
     const planet = planets[name];
 
-  const method = "method_euler"
+    const method = "method_runge_kutta"
     push();
     if (name !== "sun") {
         translate(dataJSON[method][name][a][0][0] / echelle, dataJSON[method][name][a][0][1] / echelle, dataJSON[method][name][a][0][2] / echelle);
+    }else {
+        emissiveMaterial(70, 50, 50);
     }
-    rotateY(frameCount * 0.01); // rotation pour l'effet sphère
+    rotateY(frameCount * 0.01);
+    noStroke();
+    textureMode(NORMAL);
     texture(planet.img);
     sphere(planet.size);
     pop();
@@ -100,20 +104,21 @@ function draw() {
     panorama(bg);
     imageLight(bg);
 
-    //orbitControl();
+    orbitControl();
 
+    ambientLight(80);
     pointLight(255, 255, 255, 0, 0, 0);
     drawPlanet3D("sun");
 
     for (const name of Object.keys(planets)) {
         if (name !== "sun") {
             drawPlanet3D(name);
-            drawTrajectory(name, "method_euler");
+            //drawTrajectory(name, "method_euler");
         }
     }
     
     if (a < 36501)
-        {a = a+10;}
+        {a = a+1;}
     else 
         {a = 0;}
 }

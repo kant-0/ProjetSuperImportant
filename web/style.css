@@ -18,21 +18,24 @@ html, body {
     height: 100%;
     width: 180px;
     position: absolute;
-    background-color: #fff;
+    background-color: #ffffff2f;
     transition: 0.5s ease;
     transform: translateX(-180px);
+    z-index: 1;
 
 }
 
 h1 {
     font-family: "Abril Fatface", serif;
-    color: purple;
+    color: white;
     pointer-events: none;
     padding: 30px 0 0 0;
+    z-index: 1;
 }
 
 ul li {
     list-style: none;
+    color: white;
     /*display: block;*/
     transition: 0.2s ease-out;
 }
@@ -49,7 +52,7 @@ input {
     width: 30px;
     top: 20px;
     left: 15px;
-    z-index: 1;
+    z-index: 2;
     cursor: pointer;
     border-radius: 2px;
     background-color: white;
@@ -110,6 +113,7 @@ input:checked ~ .slide {
 
 .monitor {
     display: block;
+    position: relative;
 }
 
 button {
