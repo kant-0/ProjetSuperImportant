@@ -27,14 +27,6 @@ Vec3* getAccelerationVec3(Vec3* pos) {
     return accel;
 }
 
-Vec3* getNextSpeedVec3(Vec3* prevSpeed, Vec3* prevAccel) {
-    return addVec3(prevSpeed, prevAccel);
-}
-
-Vec3* getNextPosVec3(Vec3* prevPos, Vec3* prevSpeed) {
-    return addVec3(prevPos, prevSpeed);
-}
-
 Vec3 * eulerMethodSpeed(Planet * trajectory, double deltaT) {
     return addVec3( // vxt+1 = vxt + axt x Δt
         trajectory->speed, 
