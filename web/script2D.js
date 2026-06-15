@@ -48,9 +48,10 @@ function preload() {
         planets[name].img = loadImage(`images/${name}.png`);
     }
 
-    bg = loadImage('images/sky.png');
+    bg = loadImage('images/background.png');
 
     button = createButton("reset");
+    button.addClass("reset")
     button.mousePressed(reset);
 }
 
@@ -71,7 +72,7 @@ function mouseReleased() {
 }
 
 function setup() {
-    createCanvas(720, 400, WEBGL).addClass("monitor");
+    createCanvas(windowWidth, windowHeight).addClass("monitor");
 
     imageMode(CENTER);
 
@@ -80,6 +81,7 @@ function setup() {
 }
 
 function drawPlanet(name) {
+    imageMode(CENTER);
     const planet = planets[name];
     const pos = dataJSON[name][a][0];
 
@@ -93,7 +95,8 @@ function drawPlanet(name) {
 }
 
 function draw() {
-    //background(bg);
+    imageMode(CENTER);
+
     image(bg, width/2, height/2, width, height);
 
     drawPlanet("sun");

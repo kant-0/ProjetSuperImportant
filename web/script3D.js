@@ -48,7 +48,7 @@ function preload() {
         planets[name].img = loadImage(`images/${name}.png`);
     }
 
-    bg = loadImage('images/sky.png');
+    bg = loadImage('images/panorama.png');
 
     button = createButton("reset");
     button.mousePressed(reset);
@@ -70,8 +70,12 @@ function mouseReleased() {
     noLoop();
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
 function setup() {
-    createCanvas(720, 400).addClass("monitor");
+    createCanvas(windowWidth, windowHeight, WEBGL).addClass("monitor");
 
     imageMode(CENTER);
 
@@ -93,13 +97,12 @@ function drawPlanet3D(name) {
 }
 
 function draw() {
-    background(0);
+    panorama(img);
+    imageLight(img);
 
-    // Lumière pour un rendu plus réaliste
-    ambientLight(150);
+    orbitControl();
+
     pointLight(255, 255, 255, 0, 0, 0);
-
-    // Soleil (plus gros)
     drawPlanet3D("sun");
 
     // Autres planètes

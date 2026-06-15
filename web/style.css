@@ -2,35 +2,27 @@
     overflow: hidden;
 }
 
-body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-    flex-direction: column;
-    background-color: black;
-    color: white;
-}
-
-.monitor {
-    border: 10px white solid ;
-    border-radius: 20px;
-}
-
-#sim-container {
-    background-color: black;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-}
-
-#sky {
-    opacity: .5;
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
     height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
-#sun {
+canvas {
+    display: block;
+}
+
+.title {
+    font-family: "Abril Fatface", serif;
+    color: white;
     position: absolute;
-    height: 10%;
+}
+
+button {
+    position: absolute;
 }
