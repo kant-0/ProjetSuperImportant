@@ -18,16 +18,16 @@ const planets = {
     pluto:   { img: null, size: 15 }
 };
 
-function drawTrajectory(name) {
-    for(let i=0; i < dataJSON[name].length ;i++){
+function drawTrajectory(name, method) {
+    for(let i=0; i < dataJSON[method][name].length ;i++){
         if (name !== "sun")
-            point(dataJSON[name][i][0][0] / echelle, dataJSON[name][i][0][1] / echelle);
+            point(dataJSON[method][name][i][0][0] / echelle, dataJSON[method][name][i][0][1] / echelle);
     }
 }
 
 function preload() {
-    let file = loadJSON("data.json");
-    dataJSON = file.method_euler;
+
+  dataJSON = loadJSON("data.json");
 
     for (const name in planets) {
         planets[name].img = loadImage(`images/${name}.png`);
@@ -71,9 +71,10 @@ function setup() {
 function drawPlanet3D(name) {
     const planet = planets[name];
 
+  const method = "method_euler"
     push();
     if (name !== "sun") {
-        translate(dataJSON[name][a][0][0] / echelle, dataJSON[name][a][0][1] / echelle, dataJSON[name][a][0][2] / echelle);
+        translate(dataJSON[method][name][a][0][0] / echelle, dataJSON[method][name][a][0][1] / echelle, dataJSON[method][name][a][0][2] / echelle);
     }
     rotateY(frameCount * 0.01); // rotation pour l'effet sphère
     texture(planet.img);
@@ -107,12 +108,12 @@ function draw() {
     for (const name of Object.keys(planets)) {
         if (name !== "sun") {
             drawPlanet3D(name);
-            drawTrajectory(name);
+            drawTrajectory(name, "method_euler");
         }
     }
     
     if (a < 36501)
-        {a = a+1;}
+        {a = a+10;}
     else 
         {a = 0;}
 }

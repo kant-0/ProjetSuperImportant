@@ -1,7 +1,7 @@
 let echelle = 1000000000;
 let reader = new FileReader();
 let file;
-let dataJSON;
+let dataJSON = await (await fetch('data.json')).json();
 let method;
 let bg;
 

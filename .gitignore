@@ -1,4 +1,5 @@
 .env
-*.json
+data.json
 .idea
 out
+node_modules
