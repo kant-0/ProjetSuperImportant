@@ -67,7 +67,7 @@ Vec3 * eulerAsymetricPosition(Planet * trajectory, double deltaT) {
 Vec3 * rungeKuttaSpeed(Planet * trajectory, double deltaT) {
     Vec3 * k1r = scaleVec3(trajectory->speed, deltaT); // k1,r = Δt x vn
 
-    Vec3 * kmidr = addVec3(trajectory->position, scaleVec3(k1r, 2.0)); // vn + k1,v/2 
+    Vec3 * kmidr = addVec3(trajectory->position, scaleVec3(k1r, 0.5)); // rn + k1,r/2 
 
     Vec3 * k2v = scaleVec3( // k2,v = Δt x a(kmidr)
         getAccelerationVec3(kmidr),
@@ -83,7 +83,7 @@ Vec3 * rungeKuttaPosition(Planet * trajectory, double deltaT) {
         deltaT
     );
 
-    Vec3 * kmidv = addVec3(trajectory->speed, scaleVec3(k1v, 2.0)); // rn + k1,r/2
+    Vec3 * kmidv = addVec3(trajectory->speed, scaleVec3(k1v, 0.5)); // vn + k1,v/2
 
     Vec3 * k2r = scaleVec3( // k2,r = Δt x kmidv
         kmidv, 
