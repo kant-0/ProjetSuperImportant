@@ -44,7 +44,7 @@ struct json_object {
 };
 // --- --- ---
 
-void appendPlanetToJson(JsonSet* json, int method, Planet* p);
+void appendPlanetToJson(JsonSet** json, int method, Planet* p);
 JsonObject* newJsonObject(
     JsonObjType type, 
     int i,
@@ -52,8 +52,8 @@ JsonObject* newJsonObject(
     JsonArray* arr,
     JsonSet* set
 );
-void print_json_array(FILE* out, JsonArray* array, int indent_level);
-void print_json_set(FILE* out, JsonSet* set, int indent_level);
+void print_json_array(FILE* out, JsonArray* array);
+void print_json_set(FILE* out, JsonSet* set);
 
 void write_json(FILE* out, Planet* trajectory);
 
