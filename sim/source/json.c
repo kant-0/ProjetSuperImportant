@@ -8,6 +8,8 @@
 #include "planet.h"
 
 char* euler = "method-euler";
+char* rk = "method-runge-kutta";
+char* asym_euler = "method-asymetric-euler";
 
 void write_json(FILE* out, Planet * trajectory) {
     if (!out) {
@@ -86,12 +88,19 @@ JsonObject* newJsonObject(
 void appendPlanetToJson(JsonSet* json, int method, Planet* p) {
 
     // method 1: euler
+    // method 2: runge-kutta
+    // method 3: asymetric-euler
 
     char* m = NULL;
     switch (method) {
         case 1:
             m = euler;
             break;
+        case 2:
+            m = rk;
+            break;
+        case 3:
+            m = asym_euler;
     }
     if (!m) return;
 
@@ -136,4 +145,71 @@ void appendPlanetToJson(JsonSet* json, int method, Planet* p) {
 
         appendToJsonArray(&(planetArrayObj->Array), newJsonObject(ARRAY, 0, 0, triplet, NULL));
     }
+}
+
+
+
+void print_json_set(FILE* out, JsonSet* set, int indent_level) {
+    // note : out must be writeable !!!
+    fprintf(out, "{\n");
+
+    while (set->next) {
+        JsonObject* v = set->value;
+
+        for (int i = 0; i < indent_level * 4; i++) fprintf(out, " ");
+        fprintf(out, "\"%s\": ", set->key);
+
+        switch (v->type) {
+            case INT:
+                fprintf(out, "%d", v->Int);
+                fprintf(out, "%s\n", (set->next) ? ",": "");
+                break;
+            case DOUBLE:
+                fprintf(out, "%le", v->Double);
+                fprintf(out, "%s\n", (set->next) ? ",": "");
+            case ARRAY:
+                print_json_array(out, v->Array, indent_level +1);
+                fprintf(out, "%s\n", (set->next) ? ",": "");
+            case SET:
+                print_json_set(out, v->Set, indent_level +1);
+                fprintf(out, "%s\n", (set->next) ? ",": "");
+        }
+
+        set = set->next;
+    }
+
+
+    for (int i = 0; i < indent_level * 4; i++) fprintf(out, " ");
+    fprintf(out, "}\n");
+}
+
+void print_json_array(FILE* out, JsonArray* array, int indent_level) {
+    // note : out must be writeable !!!
+    fprintf(out, "[\n");
+
+    while (array->next) {
+        JsonObject* v = array->value;
+
+        switch (v->type) {
+            case INT:
+                fprintf(out, "%d", v->Int);
+                fprintf(out, "%s\n", (array->next) ? ",": "");
+                break;
+            case DOUBLE:
+                fprintf(out, "%le", v->Double);
+                fprintf(out, "%s\n", (array->next) ? ",": "");
+            case ARRAY:
+                print_json_array(out, v->Array, indent_level +1);
+                fprintf(out, "%s\n", (array->next) ? ",": "");
+            case SET:
+                print_json_set(out, v->Set, indent_level +1);
+                fprintf(out, "%s\n", (array->next) ? ",": "");
+        }
+
+        array = array->next;
+    }
+
+
+    for (int i = 0; i < indent_level * 4; i++) fprintf(out, " ");
+    fprintf(out, "]\n");
 }
