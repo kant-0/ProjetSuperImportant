@@ -35,7 +35,7 @@ function readFile(input) {
     dataJSON = JSON.parse(reader.result);
 	method = Object.keys(dataJSON)[0];
 	
-    console.log(dataJSON[method]);
+    c
     for(let i=0;i<3750;i++){
       point(200+dataJSON[method][i][0][0]/echelle, 200+dataJSON[method][i][0][1]/echelle);
       i++;

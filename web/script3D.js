@@ -21,26 +21,18 @@ const planets = {
     pluto:   { img: null, size: 15 }
 };
 
-function readFile(input) {
-    let file = input.files[0];
+function readFile() {
 
-    let reader = new FileReader();
+    const file = require("data.json");
 
-    reader.readAsText(file);
+    let dataJSON = file["method_euler"];
 
-    reader.onload = function() {
-        dataJSON = JSON.parse(reader.result);
-        dataJSON = dataJSON[calculMethod];
+    console.log(file);
 
-        for(let i=0;i<3750;i++){
-            point(oX + dataJSON[method][i][0][0]/echelle, oY + dataJSON[method][i][0][1]/echelle);
-            i++;
-        }
+    for(let i=0;i<3750;i++){
+        point(oX + dataJSON[method][i][0][0]/echelle, oY + dataJSON[method][i][0][1]/echelle);
+        i++;
     }
-
-    reader.onerror = function() {
-        console.log(reader.error);
-    };
 }
 
 function preload() {
@@ -112,10 +104,10 @@ function drawPlanet2D(name) {
 }
 
 function draw() {
-    panorama(img);
-    imageLight(img);
+    panorama(bg);
+    imageLight(bg);
 
-    orbitControl();
+    //orbitControl();
 
     pointLight(255, 255, 255, 0, 0, 0);
     drawPlanet3D("sun");
