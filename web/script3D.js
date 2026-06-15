@@ -1,12 +1,9 @@
 let echelle = 1000000000;
 let reader = new FileReader();
-let file;
 let dataJSON;
 let method;
 let bg;
-
-let oY = 400/2;
-let oX = 720/2;
+let a = 0;
 
 const planets = {
     sun:     { img: null, size: 80 },
@@ -21,21 +18,17 @@ const planets = {
     pluto:   { img: null, size: 15 }
 };
 
-function readFile() {
-
-    const file = require("data.json");
-
-    let dataJSON = file["method_euler"];
-
-    console.log(file);
-
-    for(let i=0;i<3750;i++){
-        point(oX + dataJSON[method][i][0][0]/echelle, oY + dataJSON[method][i][0][1]/echelle);
-        i++;
+function drawTrajectory(name) {
+    for(let i=0; i < dataJSON[name].length ;i++){
+        if (name !== "sun")
+            point(dataJSON[name][i][0][0] / echelle, dataJSON[name][i][0][1] / echelle);
     }
 }
 
 function preload() {
+    let file = loadJSON("data.json");
+    dataJSON = file.method_euler;
+
     for (const name in planets) {
         planets[name].img = loadImage(`images/${name}.png`);
     }
@@ -77,11 +70,11 @@ function setup() {
 
 function drawPlanet3D(name) {
     const planet = planets[name];
-    const [x, y, z] = dataJSON[name][a][0];
 
     push();
-    translate(x / ECHELLE, y / ECHELLE, z / ECHELLE);
-
+    if (name !== "sun") {
+        translate(dataJSON[name][a][0][0] / echelle, dataJSON[name][a][0][1] / echelle, dataJSON[name][a][0][2] / echelle);
+    }
     rotateY(frameCount * 0.01); // rotation pour l'effet sphère
     texture(planet.img);
     sphere(planet.size);
@@ -95,9 +88,8 @@ function drawPlanet2D(name) {
 
     image(
         planet.img,
-        oX + pos[0] / ECHELLE,
-        oY + pos[1] / ECHELLE,
-        0,
+        oX + pos[0] / echelle,
+        oY + pos[1] / echelle,
         planet.size,
         planet.size
     );
@@ -112,9 +104,11 @@ function draw() {
     pointLight(255, 255, 255, 0, 0, 0);
     drawPlanet3D("sun");
 
-    // Autres planètes
     for (const name of Object.keys(planets)) {
-        if (name !== "sun") drawPlanet3D(name);
+        if (name !== "sun") {
+            drawPlanet3D(name);
+            drawTrajectory(name);
+        }
     }
     
     if (a < 36501)
