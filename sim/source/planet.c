@@ -15,15 +15,30 @@ Planet * newPlanet(Vec3* pos0, Vec3* speed0, char* name) {
     return planet;
 }
 
-void pushNextPlanetIteration(Planet* p) {
+void pushNextPlanetIteration(Planet* p, int method) {
+    // method 1 : euler
+    // method 2 : runge-kutta
+    // method 3 : asymetric euler
+    
     while (p->next) p = p->next; // go to end of linked list
     
-    Vec3* prevAccel = getAccelerationVec3(p->position);
-    Vec3* newSpeed = getNextSpeedVec3(p->speed, prevAccel);
+    const double deltaT = 86400;
 
-    free(prevAccel);
-    
-    Vec3* newPosition = getNextPosVec3(p->position, p->speed);
+    Vec3* newSpeed = NULL;
+    Vec3* newPosition = NULL;
+    switch (method) {
+        case 1:
+            newSpeed = eulerMethodSpeed(p, deltaT);
+            newPosition = eulerMethodPosition(p, deltaT);
+            break;
+        case 2:
+            newSpeed = rungeKuttaSpeed(p, deltaT);
+            newPosition = rungeKuttaPosition(p, deltaT);
+            break;
+        case 3:
+            newSpeed = eulerAsymetricSpeed(p, deltaT);
+            newPosition = eulerAsymetricPosition(p, deltaT);
+    }
     
     p->next = newPlanet(newPosition, newSpeed, p->name);
     p->next->time = p->time + 1;

@@ -19,6 +19,6 @@ typedef struct system_ {
 
 Planet * newPlanet(Vec3* pos0, Vec3* speed0, char* name);
 void pushElement(Planet **my_element, Vec3* newPosition, Vec3* newSpeed);
-void pushNextPlanetIteration(Planet* p);
+void pushNextPlanetIteration(Planet* p, int method);
 
 #endif
