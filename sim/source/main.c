@@ -2,7 +2,6 @@
 
 #include "planet.h"
 #include "vector.h"
-#include "formula.h"
 #include "json.h"
 
 #define N_ITERATIONS 2000
