@@ -9,4 +9,5 @@ all:
 	xdg-open http://localhost:3000/web
 
 clean:
-	make -C sim clean
+	rm sim/out
+	rm web/data.json
