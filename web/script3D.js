@@ -24,7 +24,7 @@ function drawTrajectory(name, method) {
     }
 }
 
-function drawTrajectoryTail(name, method, tailLength = 300) {
+/*function drawTrajectoryTail(name, method, tailLength = 300) {
     const arr = dataJSON[method][name];
     const start = max(0, a - tailLength);
 
@@ -60,7 +60,7 @@ function drawTrajectorySpeed(name, method) {
             p2[0] / echelle, p2[1] / echelle, p2[2] / echelle
         );
     }
-}
+}*/
 
 function preload() {
 
@@ -77,9 +77,6 @@ function preload() {
 }
 
 function reset() {
-    for (const name of Object.keys(planets)) {
-        drawTrajectory(name, method);
-    }
     a = 0;
     loop();
 }
@@ -151,7 +148,7 @@ function draw() {
     for (const name of Object.keys(planets)) {
         if (name !== "sun") {
             drawPlanet3D(name);
-            drawTrajectorySpeed(name, method)
+            //drawTrajectorySpeed(name, method)
         }
     }
     

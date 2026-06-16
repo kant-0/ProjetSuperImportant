@@ -6,19 +6,19 @@
 #define CUBED(x) ((x)*(x)*(x))
 #define SQ(x) ((x)*(x))
 
-double acceleration(double radius) {
+double acceleration(double radius) { // fonction permettant d'obtenir la valeur de l'accélération
     double G = 6.6743e-11;
     double m_Sun = 1.989e30;
     return -(G*m_Sun)/(radius*radius);
 }
 
-Vec3* radius(Vec3* pos1, Vec3* pos2) {
+Vec3* radius(Vec3* pos1, Vec3* pos2) { // calcul du rayon entre deux astres
     Vec3 * r = malloc(sizeof(Vec3));
     r = addVec3(pos2, scaleVec3(pos1, -1.0)); // B - A
     return r;
 }
 
-Vec3* getAccelerationVec3(Vec3* pos) {
+Vec3* getAccelerationVec3(Vec3* pos) { // permet d'obtenir le vecteur accélération pour une position
     const double G = 6.6743e-11;
     const double m_S = 1.989e30;
     const double dist = normVec3(pos);
@@ -28,7 +28,7 @@ Vec3* getAccelerationVec3(Vec3* pos) {
     return accel;
 }
 
-Vec3 * eulerMethodSpeed(Planet * trajectory, double deltaT) {
+Vec3 * eulerMethodSpeed(Planet * trajectory, double deltaT) { // renvoie la vitesse suivante à un point avec la méthode d'Euler
     return addVec3( // vxt+1 = vxt + axt x Δt
         trajectory->speed, 
         scaleVec3(
@@ -38,7 +38,7 @@ Vec3 * eulerMethodSpeed(Planet * trajectory, double deltaT) {
     ); 
 }
 
-Vec3 * eulerMethodPosition(Planet * trajectory, double deltaT) {
+Vec3 * eulerMethodPosition(Planet * trajectory, double deltaT) { // renvoie la position suivante à un point avec la méthode d'Euler
     return addVec3( // xt+1 = xt + vxt x Δt
         trajectory->position, 
         scaleVec3(
@@ -48,7 +48,7 @@ Vec3 * eulerMethodPosition(Planet * trajectory, double deltaT) {
     ); 
 }
 
-Vec3 * eulerAsymetricSpeed(Planet * trajectory, double deltaT) {
+Vec3 * eulerAsymetricSpeed(Planet * trajectory, double deltaT) { // renvoie la vitesse suivante à un point avec la méthode d'Euler asymétrique
     Vec3 * posTn1 = eulerMethodPosition(trajectory, deltaT);
 
     return addVec3( // vxt+1 = vxt + axt+1 x Δt
@@ -60,11 +60,11 @@ Vec3 * eulerAsymetricSpeed(Planet * trajectory, double deltaT) {
     ); 
 }
 
-Vec3 * eulerAsymetricPosition(Planet * trajectory, double deltaT) {
-    return eulerMethodPosition(trajectory, deltaT);
+Vec3 * eulerAsymetricPosition(Planet * trajectory, double deltaT) { // renvoie la position suivante à un point avec la méthode d'Euler asymétrique
+    return eulerMethodPosition(trajectory, deltaT); // ce qui est équivalent à la méthode d'Euler de base 
 }
 
-Vec3 * rungeKuttaSpeed(Planet * trajectory, double deltaT) {
+Vec3 * rungeKuttaSpeed(Planet * trajectory, double deltaT) { // renvoie la position suivante à un point avec la méthode d'Euler asymétrique
     Vec3 * k1r = scaleVec3(trajectory->speed, deltaT); // k1,r = Δt x vn
 
     Vec3 * kmidr = addVec3(trajectory->position, scaleVec3(k1r, 0.5)); // rn + k1,r/2 
