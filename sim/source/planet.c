@@ -4,7 +4,7 @@
 #include "vector.h"
 #include "formula.h"
 
-Planet * newPlanet(Vec3* pos0, Vec3* speed0, char* name) { // création d'une nouvelle
+Planet * newPlanet(Vec3* pos0, Vec3* speed0, char* name) { // create a new planet
     Planet* planet = malloc(sizeof(Planet));
     planet->name = name;
     planet->position = pos0;
@@ -15,7 +15,7 @@ Planet * newPlanet(Vec3* pos0, Vec3* speed0, char* name) { // création d'une no
     return planet;
 }
 
-void pushNextPlanetIteration(Planet* p, int method) { // ajoute le point suivant d'une planète dans sa trajectoire
+void pushNextPlanetIteration(Planet* p, int method) {
     // method 1 : euler
     // method 2 : runge-kutta
     // method 3 : asymetric euler
@@ -26,7 +26,7 @@ void pushNextPlanetIteration(Planet* p, int method) { // ajoute le point suivant
 
     Vec3* newSpeed = NULL;
     Vec3* newPosition = NULL;
-    switch (method) { // en fonction de la méthode de calcul utilisé
+    switch (method) { // choose between the methods
         case 1:
             newSpeed = eulerMethodSpeed(p, deltaT);
             newPosition = eulerMethodPosition(p, deltaT);
