@@ -12,7 +12,7 @@ double acceleration(double radius) { // fonction permettant d'obtenir la valeur 
     return -(G*m_Sun)/(radius*radius);
 }
 
-Vec3* radius(Vec3* pos1, Vec3* pos2) { // calcul du rayon entre deux astres
+Vec3* radius(Vec3* pos1, Vec3* pos2) { // calcul du rayon entre deux astres (old, not used)
     Vec3 * r = malloc(sizeof(Vec3));
     r = addVec3(pos2, scaleVec3(pos1, -1.0)); // B - A
     return r;

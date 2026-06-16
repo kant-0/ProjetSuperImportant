@@ -11,7 +11,7 @@ char* euler = "method_euler";
 char* rk = "method_runge_kutta";
 char* asym_euler = "method_asymetric_euler";
 
-void write_json(FILE* out, Planet * trajectory) {
+void write_json(FILE* out, Planet * trajectory) { // old, we don't use that anymore
     if (!out) {
         fprintf(stderr, "Impossible d'ouvrir le fichier");
         return;
@@ -81,7 +81,7 @@ JsonObject* newJsonObject(
         case SET:
             obj->Set = set;
             break;
-        default: // error handling
+        default: // error handling (we don't do anything)
             break;
     };
     return obj;
