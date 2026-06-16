@@ -6,24 +6,41 @@ let speed = 1;
 let a = 0;
 
 const planets = {
-    sun:     { img: null, size: 30 },
-    mercury: { img: null, size: 10 },
-    venus:   { img: null, size: 20 },
-    earth:   { img: null, size: 25 },
-    mars:    { img: null, size: 20 },
-    jupiter: { img: null, size: 30 },
-    saturn:  { img: null, size: 30 },
-    uranus:  { img: null, size: 25 },
-    neptune: { img: null, size: 25 },
-    pluto:   { img: null, size: 15 }
+    sun:     { img: null, size: 30, rgb: null},
+    mercury: { img: null, size: 10, rgb: 'rgb(57, 57, 57)'},
+    venus:   { img: null, size: 20, rgb: 'rgb(230, 152, 89)'},
+    earth:   { img: null, size: 25, rgb: 'rgb(47, 106, 105)'},
+    mars:    { img: null, size: 20, rgb: 'rgb(153, 61, 0)'},
+    jupiter: { img: null, size: 30, rgb: 'rgb(176, 127, 53)'},
+    saturn:  { img: null, size: 30, rgb: 'rgb(176, 143, 54)'},
+    uranus:  { img: null, size: 25, rgb: 'rgb(85, 128, 170)'},
+    neptune: { img: null, size: 25, rgb: 'rgb(54, 104, 150)'},
+    pluto:   { img: null, size: 15, rgb: 'rgb(57, 57, 57)'}
 };
 
-function drawTrajectory(name, method) {
+/*function drawTrajectory(name, method) {
     for(let i=0; i < dataJSON[method][name].length ;i++){
         if (name !== "sun")
             point(dataJSON[method][name][i][0][0] / echelle, dataJSON[method][name][i][0][1] / echelle);
     }
+}*/
+
+function drawTail(name) {
+    const arr = dataJSON[method][name];
+    const tail = 200; // longueur de la traînée
+
+    beginShape();
+    noFill();
+    stroke(planets[name].rgb);
+
+    for (let i = max(0, a-tail); i < a; i++) {
+        const p = arr[i][0];
+        vertex(p[0]/echelle, p[1]/echelle, p[2]/echelle);
+    }
+
+    endShape();
 }
+
 
 function preload() {
 
@@ -86,8 +103,7 @@ function drawPlanet2D(name) {
 }
 
 function draw() {
-    panorama(bg);
-    imageLight(bg);
+    background(0);
 
     orbitControl();
 
@@ -98,7 +114,7 @@ function draw() {
     for (const name of Object.keys(planets)) {
         if (name !== "sun") {
             drawPlanet3D(name);
-            //drawTrajectorySpeed(name, method)
+            drawTail(name);
         }
     }
     
