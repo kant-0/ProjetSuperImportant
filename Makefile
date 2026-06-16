@@ -5,8 +5,9 @@ all:
 	./sim/out
 	mv data.json web/data.json
 	cd web
-	python3 -m http.server 3000 & \
 	xdg-open http://localhost:3000/web
+	python3 -m http.server 3000
 
 clean:
-	make -C sim clean
+	rm sim/out
+	rm web/data.json
