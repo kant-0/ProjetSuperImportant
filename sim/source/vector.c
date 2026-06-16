@@ -6,7 +6,7 @@
 
 #define SQ(x) ((x)*(x))
 
-Vec3* origin() {
+Vec3* origin() { // vecteur nul
     Vec3* vec = malloc(sizeof(Vec3));
 
     vec->x = 0.0;
@@ -16,7 +16,7 @@ Vec3* origin() {
     return vec;
 }
 
-Vec3* newVec3(double x, double y, double z) {
+Vec3* newVec3(double x, double y, double z) { // nouveau vecteur à 3 coordonnées
     Vec3* vec = malloc(sizeof(Vec3));
 
     vec->x = x;
@@ -26,19 +26,19 @@ Vec3* newVec3(double x, double y, double z) {
     return vec;
 }
 
-Vec3* addVec3(Vec3* a, Vec3* b) {
+Vec3* addVec3(Vec3* a, Vec3* b) { // additionne deux vecteurs
     return newVec3(a->x + b->x,a->y + b->y,a->z + b->z);
 }
 
-Vec3* scaleVec3(Vec3* vec, double scalar) {
+Vec3* scaleVec3(Vec3* vec, double scalar) { // multiplie un vecteur avec un scalaire
     return newVec3(vec->x * scalar,vec->y * scalar,vec->z * scalar);
 }
 
-double normVec3(Vec3* vec) {
+double normVec3(Vec3* vec) { // renvoie la norme du vecteur
     return sqrt(SQ(vec->x) + SQ(vec->y) + SQ(vec->z));
 }
 
-Vec3* normalize(Vec3* pos) {
+Vec3* normalize(Vec3* pos) { // renvoie le vecteur normalisé d'un vecteur
     Vec3* new_vec = scaleVec3(pos, 1/normVec3(pos));
     return new_vec;
 }

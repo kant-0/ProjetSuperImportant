@@ -24,44 +24,6 @@ function drawTrajectory(name, method) {
     }
 }
 
-/*function drawTrajectoryTail(name, method, tailLength = 300) {
-    const arr = dataJSON[method][name];
-    const start = max(0, a - tailLength);
-
-    stroke(255, 255, 255, 120);
-    strokeWeight(2);
-    
-    beginShape();
-    noFill();
-
-    for (let i = start; i < a; i++) {
-        const p = arr[i][0];
-        vertex(p[0] / echelle, p[1] / echelle, p[2] / echelle);
-    }
-
-    endShape();
-}
-
-function drawTrajectorySpeed(name, method) {
-    const arr = dataJSON[method][name];
-
-    for (let i = 1; i < arr.length; i++) {
-        const p1 = arr[i-1][0];
-        const p2 = arr[i][0];
-
-        const v = dist(p1[0], p1[1], p1[2], p2[0], p2[1], p2[2]);
-        const c = map(v, 0, 50000, 0, 255); // à ajuster selon ton dataset
-
-        stroke(c, 255 - c, 100, 150);
-        strokeWeight(2);
-
-        line(
-            p1[0] / echelle, p1[1] / echelle, p1[2] / echelle,
-            p2[0] / echelle, p2[1] / echelle, p2[2] / echelle
-        );
-    }
-}*/
-
 function preload() {
 
   dataJSON = loadJSON("data.json");

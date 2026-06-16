@@ -9,8 +9,8 @@
 int main() {
     JsonSet* json = NULL;
 
-    char* planets[] = {"mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto"};
-    Vec3* pos0[] = {
+    char* planets[] = {"mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto"}; // liste des planètes
+    Vec3* pos0[] = { // liste des positions des planètes à leur périhélie
         newVec3(46001200.0e3, 0.0, 0.0),
         newVec3(107476000.0e3, 0.0, 0.0),
         newVec3(147098074.0e3, 0.0, 0.0),
@@ -21,7 +21,7 @@ int main() {
         newVec3(4459800000.0e3, 0.0, 0.0),
         newVec3(4436824613.0e3, 0.0, 0.0)
     };
-    Vec3* speed0[] = {
+    Vec3* speed0[] = { // liste des vitesses orbitales des planètes
         newVec3(0.0, 47362.0, 0.0),
         newVec3(0.0, 35025.0, 0.0),
         newVec3(0.0, 29783.0, 0.0),
@@ -32,7 +32,7 @@ int main() {
         newVec3(0.0, 5432.0, 0.0),
         newVec3(0.0, 4740.0, 0.0)
     };
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; i++) { // associe chaque planètes à sa vitesse orbitale et à sa périhélie
         for (int j = 0; j < 3; j++) {
             Planet* p = newPlanet(
                 pos0[i],
