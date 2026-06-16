@@ -40,7 +40,7 @@ ul li {
     transition: 0.2s ease-out;
 }
 
-input {
+input[type="checkbox"] {
     display: none;
     visibility: hidden;
     -webkit-appearance: none;
@@ -64,7 +64,7 @@ input {
     position: absolute;
     height: 2px;
     width: 20px;
-    background-color: purple;
+    background-color: black;
     border-radius: 50px;
     transition: 0.3s ease;
 }
@@ -109,6 +109,85 @@ input:checked ~ .toggle .middle_line {
 input:checked ~ .slide {
     transform: translateX(0);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.playpause {
+    height: 30px;
+    width: 30px;
+    top: 20px;
+    right: 17px;
+    background-color: white;
+    z-index: 1;
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+    transition: 0.3 ease-in-out;
+    clip-path: polygon(
+        0 0,
+        50% 25%,
+        50% 75%,
+        50% 75%,
+        50% 25%,
+        100% 50%,
+        100% 50%,
+        0 100%,
+        100% 50%,
+        0 100%
+    );
+}
+
+.playpause.playing {
+    clip-path: polygon(
+        0 0,
+        40% 0,
+        40% 100%,
+        60% 100%,
+        60% 0,
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+}
+
+.playpause:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+}
+
+.reset {
+    height: 35px;
+    width: 35px;
+    right: 15px;
+    top: 60px;
+    border-radius: 10px;
+    background-color: white;
+    z-index: 1;
+
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset img {
+    width: 80%;
+    height: 80%;
+}
+
+.reset:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+}
+
+.container {
+    top: 70px;
+    right: 0px;
+    transform: rotate(270deg);
+    position: absolute;
+    z-index: 1;
 }
 
 .monitor {

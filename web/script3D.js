@@ -2,6 +2,7 @@ let echelle = 1000000000;
 let dataJSON;
 let method = "method_euler";
 let bg;
+let speed = 1;
 let a = 0;
 
 const planets = {
@@ -33,24 +34,11 @@ function preload() {
     }
 
     bg = loadImage('images/panorama.png');
-
-    button = createButton("reset");
-    button.mousePressed(reset);
 }
 
 function reset() {
     a = 0;
     loop();
-}
-
-function mousePressed() {
-    if (mouseButton === LEFT) {
-        loop();
-    }
-}
-
-function mouseReleased() {
-    noLoop();
 }
 
 function windowResized() {
@@ -114,8 +102,8 @@ function draw() {
         }
     }
     
-    if (a < dataJSON[method]["earth"].length) {
-        a++;
+    if (a <= dataJSON[method]["earth"].length - 2 - speed) {
+        a += speed;
     } else {
         reset();
     }
@@ -128,4 +116,30 @@ if (select) {
         console.log(method);
         reset()
     }
+}
+
+const btn = document.querySelector('.playpause');
+
+btn.onclick = () => {
+    btn.classList.toggle('playing');
+    btn.classList.contains('playing') ? loop() : noLoop();
+}
+
+document.body.onkeyup = function(e) {
+    if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
+        btn.classList.toggle('playing');
+        btn.classList.contains('playing') ? loop() : noLoop();
+    }
+}
+
+const resetBtn = document.querySelector('.reset');
+
+resetBtn.onclick = () => {
+    reset();
+}
+
+const slider = document.getElementById('slider');
+slider.oninput = () => {
+    speed = floor(slider.value/10) + 1;
+    console.log(slider.value);
 }

@@ -4,7 +4,7 @@
 #include "vector.h"
 #include "json.h"
 
-#define N_ITERATIONS 2000
+#define N_ITERATIONS 10000
 
 int main() {
     JsonSet* json = NULL;

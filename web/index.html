@@ -24,7 +24,7 @@
                 <h1>Paramètre</h1>
                 <ul>
                     <li>
-                        <label for="pet-select">Choisissez une méthode de calcul :</label>
+                        <label for="method">Choisissez une méthode de calcul :</label>
 
                         <select name="method" id="method">
                             <option value="method_euler" selected="selected">Euler</option>
@@ -42,6 +42,12 @@
 
         <label>
             <div class="playpause"></div>
+            <div class="reset">
+                <img src="images/arrow.svg" alt="reset">
+            </div>
+            <div class="container">
+                <input type="range" name="slider" id="slider" value="0" min="0" max="100">
+            </div>
         </label>
 
         <h1 class="title">Projet Kepler</h1>
