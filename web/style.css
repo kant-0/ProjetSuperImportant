@@ -40,7 +40,7 @@ ul li {
     transition: 0.2s ease-out;
 }
 
-input[type="checkbox"] {
+#menu {
     display: none;
     visibility: hidden;
     -webkit-appearance: none;
