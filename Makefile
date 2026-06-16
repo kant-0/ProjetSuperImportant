@@ -1,5 +1,5 @@
 
-.PHONY: all clean
+.PHONY: all clean server
 all:
 	make -C sim
 	./sim/out

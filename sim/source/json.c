@@ -43,7 +43,7 @@ void appendToJsonSet(JsonSet** set, char* key, JsonObject* value) {
         *set = new;
         return;
     }
-    while (temp->next) temp = temp->next;
+    while (temp->next) temp = temp->next; // go to end of list
     temp->next = new;
 }
 void appendToJsonArray(JsonArray** array, JsonObject* value) {
@@ -55,7 +55,7 @@ void appendToJsonArray(JsonArray** array, JsonObject* value) {
         *array = new;
         return;
     }
-    while (temp->next) temp = temp->next;
+    while (temp->next) temp = temp->next; // go to end of list
     temp->next = new;
 }
 JsonObject* newJsonObject(
@@ -97,7 +97,7 @@ void print_json_set(FILE* out, JsonSet* set) {
         JsonObject* v = set->value;
         fprintf(out, "\"%s\": ", set->key);
 
-        switch (v->type) {
+        switch (v->type) { // we print depending on the type of the value
             case INT:
                 fprintf(out, "%d", v->Int);
                 fprintf(out, "%s", (set->next) ? ",": "");
@@ -127,7 +127,7 @@ void print_json_array(FILE* out, JsonArray* array) {
     while (array) {
         JsonObject* v = array->value;
 
-        switch (v->type) {
+        switch (v->type) { // we print depending on the type of the value
             case INT:
                 fprintf(out, "%d", v->Int);
                 fprintf(out, "%s", (array->next) ? ",": "");
@@ -155,6 +155,7 @@ void appendPlanetToJson(JsonSet** json, int method, Planet* p) {
     char* name = p->name;
     JsonArray* planetArray = NULL;
     while (p) {
+        // we build the array from the inside out
 
         Vec3* pos = p->position;
         Vec3* speed = p->speed;
@@ -164,18 +165,22 @@ void appendPlanetToJson(JsonSet** json, int method, Planet* p) {
         JsonArray* speedArray = NULL;
         JsonArray* triplet = NULL;
 
+        // first put the position values into an array
         appendToJsonArray(&posArray, newJsonObject(DOUBLE, 0, pos->x, NULL, NULL));
         appendToJsonArray(&posArray, newJsonObject(DOUBLE, 0, pos->y, NULL, NULL));
         appendToJsonArray(&posArray, newJsonObject(DOUBLE, 0, pos->z, NULL, NULL));
 
+        // then the speed values into another one
         appendToJsonArray(&speedArray, newJsonObject(DOUBLE, 0, speed->x, NULL, NULL));
         appendToJsonArray(&speedArray, newJsonObject(DOUBLE, 0, speed->y, NULL, NULL));
         appendToJsonArray(&speedArray, newJsonObject(DOUBLE, 0, speed->z, NULL, NULL));
 
+        // and then we can append the position, speed and current time into another array
         appendToJsonArray(&triplet, newJsonObject(ARRAY, 0, 0, posArray, NULL));
         appendToJsonArray(&triplet, newJsonObject(ARRAY, 0, 0, speedArray, NULL));
         appendToJsonArray(&triplet, newJsonObject(INT, time, 0, NULL, NULL));
 
+        // then append to the planet's array
         appendToJsonArray(&planetArray, newJsonObject(ARRAY, 0, 0, triplet, NULL));
 
         p = p->next;
@@ -183,7 +188,7 @@ void appendPlanetToJson(JsonSet** json, int method, Planet* p) {
 
     char* m = NULL;
 
-    switch (method) {
+    switch (method) { // get the method string
         case 1:
             m = euler;
             break;
@@ -194,9 +199,9 @@ void appendPlanetToJson(JsonSet** json, int method, Planet* p) {
             m = asym_euler;
     }
 
-    if (!m) return;
+    if (!m) return; // if no method string then its invalid and the process shouldn't continue
 
-    if (!*json) {
+    if (!*json) { // if we don't have a json yet make it out
         JsonSet* s = NULL;
         appendToJsonSet(&s, name, newJsonObject(ARRAY, 0, 0, planetArray, NULL));
         appendToJsonSet(json, m, newJsonObject(SET, 0, 0, NULL, s));
@@ -212,10 +217,12 @@ void appendPlanetToJson(JsonSet** json, int method, Planet* p) {
 
         s = s->next;
     }
-    if (!methodSet) {
+    if (!methodSet) { // if the method set doesn't exist yet create it and append it to json
         appendToJsonSet(&methodSet, name, newJsonObject(ARRAY, 0, 0, planetArray, NULL));
         appendToJsonSet(json, m, newJsonObject(SET, 0, 0, NULL, methodSet));
         return;
     }
+
+    // if we have json and method set then append the planet to the method set
     appendToJsonSet(&methodSet, name, newJsonObject(ARRAY, 0, 0, planetArray, NULL));
 }
