@@ -1,12 +1,11 @@
 let echelle = 1000000000;
-let reader = new FileReader();
 let dataJSON;
-let method;
+let method = "method_euler";
 let bg;
 let a = 0;
 
 const planets = {
-    sun:     { img: null, size: 80 },
+    sun:     { img: null, size: 30 },
     mercury: { img: null, size: 10 },
     venus:   { img: null, size: 20 },
     earth:   { img: null, size: 25 },
@@ -25,6 +24,44 @@ function drawTrajectory(name, method) {
     }
 }
 
+function drawTrajectoryTail(name, method, tailLength = 300) {
+    const arr = dataJSON[method][name];
+    const start = max(0, a - tailLength);
+
+    stroke(255, 255, 255, 120);
+    strokeWeight(2);
+    
+    beginShape();
+    noFill();
+
+    for (let i = start; i < a; i++) {
+        const p = arr[i][0];
+        vertex(p[0] / echelle, p[1] / echelle, p[2] / echelle);
+    }
+
+    endShape();
+}
+
+function drawTrajectorySpeed(name, method) {
+    const arr = dataJSON[method][name];
+
+    for (let i = 1; i < arr.length; i++) {
+        const p1 = arr[i-1][0];
+        const p2 = arr[i][0];
+
+        const v = dist(p1[0], p1[1], p1[2], p2[0], p2[1], p2[2]);
+        const c = map(v, 0, 50000, 0, 255); // à ajuster selon ton dataset
+
+        stroke(c, 255 - c, 100, 150);
+        strokeWeight(2);
+
+        line(
+            p1[0] / echelle, p1[1] / echelle, p1[2] / echelle,
+            p2[0] / echelle, p2[1] / echelle, p2[2] / echelle
+        );
+    }
+}
+
 function preload() {
 
   dataJSON = loadJSON("data.json");
@@ -40,9 +77,11 @@ function preload() {
 }
 
 function reset() {
+    for (const name of Object.keys(planets)) {
+        drawTrajectory(name, method);
+    }
     a = 0;
     loop();
-    noLoop();
 }
 
 function mousePressed() {
@@ -71,7 +110,6 @@ function setup() {
 function drawPlanet3D(name) {
     const planet = planets[name];
 
-    const method = "method_runge_kutta"
     push();
     if (name !== "sun") {
         translate(dataJSON[method][name][a][0][0] / echelle, dataJSON[method][name][a][0][1] / echelle, dataJSON[method][name][a][0][2] / echelle);
@@ -89,7 +127,7 @@ function drawPlanet3D(name) {
 function drawPlanet2D(name) {
     imageMode(CENTER);
     const planet = planets[name];
-    const pos = dataJSON[name][a][0];
+    const pos = dataJSON[method][name][a][0];
 
     image(
         planet.img,
@@ -113,12 +151,22 @@ function draw() {
     for (const name of Object.keys(planets)) {
         if (name !== "sun") {
             drawPlanet3D(name);
-            //drawTrajectory(name, "method_euler");
+            drawTrajectorySpeed(name, method)
         }
     }
     
-    if (a < 36501)
-        {a = a+1;}
-    else 
-        {a = 0;}
+    if (a < dataJSON[method]["earth"].length) {
+        a++;
+    } else {
+        reset();
+    }
+}
+
+const select = document.querySelector("select");
+if (select) {
+    select.onchange = function(e) {
+        method = e.target.value;
+        console.log(method);
+        reset()
+    }
 }
